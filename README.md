@@ -8,8 +8,10 @@ Currently only supports x10 through the Mochad TCP Daemon
 
 ### Running
 
-`npm install -g gulp`
+1. `npm install -g gulp`
 
-`npm install`
+2. `npm install`
 
-`gulp`
+3. `npm run-script start`
+    or 
+   `gulp`
