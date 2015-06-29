@@ -6,7 +6,7 @@ var callbackWith = require('../util').jsonResponseCallback;
 var bridge = require('../bridge/manager');
 var slug = require('slug');
 
-module.exports = (app) => {
+export default (app) => {
   app.use('/appliances', router);
 }
 
@@ -25,6 +25,7 @@ router.get('/:slug/:cmd', (req, res, next) => {
     if (appliance.commands.indexOf(cmd) == -1)
       return next(new Error('command not supported: ' + cmd + " appliance: " + this.name));
     bridge.sendCommand(cmd, appliance);
+    // bridge.once(appliance.slug + '_updated', () => { res.send('OK'); });
     res.send('OK');
   });
 });
@@ -32,6 +33,7 @@ router.get('/:slug/:cmd', (req, res, next) => {
 router.post('/', (req, res, next) => {
   if (!req.body.slug && req.body.name) req.body.slug = slug(req.body.name);
   var appliance = new Appliance(req.body);
+  appliance.fillIn();
   appliance.save((err) => {
     if (!err) {
       console.log("created");
@@ -40,5 +42,14 @@ router.post('/', (req, res, next) => {
       console.log(err);
       return next(err);
     }
+  });
+});
+
+router.put('/:slug', (req, res, next) => {
+  Appliance.update({slug: req.params.slug}, req.body, (err, num) => {
+    if (!err)
+      res.send(num);
+    else
+      next(err);
   });
 });

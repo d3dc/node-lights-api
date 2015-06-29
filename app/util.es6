@@ -12,6 +12,6 @@ export function requireAppPackage(p, func) {
   var packageFiles = glob.sync(config.root + '/app/'+p+'/*.es6');
   packageFiles.forEach(function (file) {
     var r = require(file);
-    if (func) func(r);
+    if (func) return func(r);
   });
 };
