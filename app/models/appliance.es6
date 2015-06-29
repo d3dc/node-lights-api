@@ -5,6 +5,10 @@ var mongoose = require('mongoose');
 let ApplianceSchema = new mongoose.Schema({
   interface: String,
   address: String,
+  slug: {
+    type: String,
+    index : { unique : true },
+  },
   name: {
     type: String,
     index : { unique : true },
@@ -13,7 +17,7 @@ let ApplianceSchema = new mongoose.Schema({
   commands: [String],
 });
 
-ApplianceSchema.methods.toString = () => {
+ApplianceSchema.methods.toString = function() {
   return this.interface + ": " + this.name + " (" + this.address + ")";
 };
 
