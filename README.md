@@ -7,11 +7,9 @@ Uses Express and Mongoose
 Currently only supports x10 through the Mochad TCP Daemon
 
 ### Running
-
-Optional: `npm install -g gulp`
-
 1. `npm install`
+2. `npm start`
 
-2. `npm run-script start`
-    or 
-   `gulp`
+### Updating styles
+1. `npm install -g gulp`
+2. `gulp`
